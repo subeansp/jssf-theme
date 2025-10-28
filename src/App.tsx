@@ -1,22 +1,22 @@
 import jssf_theme from "./jssf_theme.jpg";
 
-const ROWS = import.meta.env.VITE_ROWS || 1;
-const COLS = import.meta.env.VITE_COLS || 1;
-const MATCHED = import.meta.env.VITE_MATCHED || 0;
+const ROWS = parseInt(import.meta.env.VITE_ROWS) || 1;
+const COLS = parseInt(import.meta.env.VITE_COLS) || 1;
+const MATCHED = parseInt(import.meta.env.VITE_MATCHED) || 0;
 const PAIRS = ROWS * COLS;
 
-const storedIDS = localStorage.getItem("IDS");
-let IDS: number[];
+const storedIds = localStorage.getItem("Ids");
+let Ids: number[];
 
-if (storedIDS) {
-  IDS = JSON.parse(storedIDS);
+if (storedIds) {
+  Ids = JSON.parse(storedIds);
 } else {
-  IDS = Array.from({ length: PAIRS }, (_, index) => index);
+  Ids = Array.from({ length: PAIRS }, (_, index) => index);
   for (let i = PAIRS - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [IDS[i], IDS[j]] = [IDS[j], IDS[i]];
+    [Ids[i], Ids[j]] = [Ids[j], Ids[i]];
   }
-  localStorage.setItem("IDS", JSON.stringify(IDS));
+  localStorage.setItem("Ids", JSON.stringify(Ids));
 }
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
         <div
           key={index}
           style={{
-            backgroundColor: IDS.slice(MATCHED).includes(index)
+            backgroundColor: Ids.slice(MATCHED).includes(index)
               ? "black"
               : "transparent",
           }}
